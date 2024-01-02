@@ -1,0 +1,5 @@
+.Rproj.user
+buildnotes.R
+testingnotes.R
+renv.lock
+renv/*

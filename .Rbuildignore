@@ -1,0 +1,6 @@
+^renv$
+^renv\.lock$
+^iSEESpatialView\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^README\.Rmd$
