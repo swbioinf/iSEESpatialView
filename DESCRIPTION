@@ -13,4 +13,8 @@ Imports:
     Seurat (>= 5.0.1),
     SingleCellExperiment,
     iSEE,
-    dplyr
+    dplyr,
+    viridis,
+    RColorBrewer,
+    HDF5Array,
+    shiny
