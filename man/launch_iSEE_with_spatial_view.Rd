@@ -6,6 +6,7 @@
 \usage{
 launch_iSEE_with_spatial_view(
   sce,
+  main_cats = c(),
   plot_mode = "spatial",
   ecm = get_ecm(),
   max_cat = 40
@@ -13,6 +14,11 @@ launch_iSEE_with_spatial_view(
 }
 \arguments{
 \item{sce}{single cell experiment object to display (Suggest generating with convert_seurat_to_viewable_sce() )}
+
+\item{main_cats}{Vector of metadata/cell information column names of
+particular interest. The first one will end up plotted by default
+(typically set to cluster), others brought up to the front of the drop down
+selection for easy access.}
 
 \item{plot_mode}{How to setup plot panels in interface. Currently only 'spatial' or NULL (iSEE defaults).}
 
@@ -39,6 +45,10 @@ concept of different slides)
 \examples{
 
 \dontrun{
+# Go
 launch_iSEE_with_spatial_view(sce)
+
+# make clusters the default grouping in various plots (and bring sample/fov up to top of lists)
+launch_iSEE_with_spatial_view(sce, c("cluster","sample","fov"))
 }
 }

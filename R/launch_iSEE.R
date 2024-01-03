@@ -89,6 +89,10 @@ get_initial_plots <- function(plot_mode) {
 #' concept of different slides)
 #'
 #' @param sce single cell experiment object to display (Suggest generating with convert_seurat_to_viewable_sce() )
+#' @param main_cats Vector of metadata/cell information column names of
+#' particular interest. The first one will end up plotted by default
+#' (typically set to cluster), others brought up to the front of the drop down
+#' selection for easy access.
 #' @param plot_mode How to setup plot panels in interface. Currently only 'spatial' or NULL (iSEE defaults).
 #' @param ecm Custom colourmap used in display (handy for sample colours. See iSEE docs.)
 #' @param max_cat More than this many categoricals, and data will be treated as continuous. (default=40)
@@ -96,16 +100,42 @@ get_initial_plots <- function(plot_mode) {
 #' @examples
 #'
 #' \dontrun{
+#' # Go
 #' launch_iSEE_with_spatial_view(sce)
+#'
+#' # make clusters the default grouping in various plots (and bring sample/fov up to top of lists)
+#' launch_iSEE_with_spatial_view(sce, c("cluster","sample","fov"))
 #' }
 #' @export
-launch_iSEE_with_spatial_view <- function(sce, plot_mode="spatial", ecm=get_ecm(), max_cat=40) {
+launch_iSEE_with_spatial_view <- function(sce,
+                                          main_cats=c(),
+                                          plot_mode="spatial",
+                                          ecm=get_ecm(),
+                                          max_cat=40) {
 
   initial_plots=get_initial_plots(plot_mode = plot_mode)
 
   registerAppOptions(sce, color.maxlevels=max_cat)
 
-  app <- iSEE(sce,
+
+  # Put the 'main' columns at the front.
+  # First one will get used as defaults across plots.
+  # Others are at least easy to find in lists.
+  if (length(main_cats) > 0) {
+    all_cols <- colnames(colData(sce))
+    if (! all(main_cats %in% all_cols)) {
+      stop(paste("Can't find specified main categories in data columns: ",main_cats[!main_cats%in% all_cols])    )
+    }
+    new_col_order <- c(main_cats, all_cols[! all_cols %in% main_cats])
+    colData(sce) <- colData(sce)[,new_col_order]
+  }
+
+
+
+
+
+
+    app <- iSEE(sce,
               colormap = ecm,
               initial  = initial_plots
   )
