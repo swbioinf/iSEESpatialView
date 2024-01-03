@@ -56,13 +56,19 @@ get_initial_plots <- function(plot_mode) {
                        ColorBy="Column data",
                        PanelWidth=6L
       ),
-      # Gene list is better wide
-      RowDataTable(PanelWidth=12L),
+      # Cell info - better wide, often used for subsetting
+      ColumnDataTable(PanelWidth=12L),
 
       # For cell level observations (QC.)
       ColumnDataPlot(PanelWidth=6L,
                      DataBoxOpen=TRUE,
-                     VisualBoxOpen=TRUE )
+                     VisualBoxOpen=TRUE ),
+
+      # Gene info, better wide, but only included for occasional inspection.
+      RowDataTable(PanelWidth=6L)
+
+
+
 
       # Gene levels observations (RowDataPlot)are sometimes handy in QC steps, (total gene expression) but not so much for later browsing.
       # The defalts for this tend to plot a big blob of gene names too - slow and ugly.
