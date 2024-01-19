@@ -3,3 +3,4 @@ buildnotes.R
 testingnotes.R
 renv.lock
 renv/*
+.Rhistory
