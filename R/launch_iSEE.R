@@ -94,6 +94,12 @@ get_initial_plots <- function(plot_mode) {
 #' If not subsetted to fov / slide in iSEE, these will be overplotted. (No
 #' concept of different slides)
 #'
+#'
+#' `launch_iSEE_with_spatial_view()` launches the interface for use
+#'
+#' `make_iSEE_shinyApp_with_spatial_view()` will return a shinyApp object.
+#'
+#'
 #' @param sce single cell experiment object to display (Suggest generating with convert_seurat_to_viewable_sce() )
 #' @param main_cats Vector of metadata/cell information column names of
 #' particular interest. The first one will end up plotted by default
@@ -113,45 +119,46 @@ get_initial_plots <- function(plot_mode) {
 #' launch_iSEE_with_spatial_view(sce, c("cluster","sample","fov"))
 #' }
 #' @export
-launch_iSEE_with_spatial_view <- function(sce,
-                                          main_cats=c(),
-                                          plot_mode="spatial",
-                                          ecm=get_ecm(),
-                                          max_cat=40) {
+launch_iSEE_with_spatial_view <- function(...) {
 
-  initial_plots=get_initial_plots(plot_mode = plot_mode)
-
-  registerAppOptions(sce, color.maxlevels=max_cat)
-
-
-  # Put the 'main' columns at the front.
-  # First one will get used as defaults across plots.
-  # Others are at least easy to find in lists.
-  if (length(main_cats) > 0) {
-    all_cols <- colnames(colData(sce))
-    if (! all(main_cats %in% all_cols)) {
-      stop(paste("Can't find specified main categories in data columns: ",main_cats[!main_cats%in% all_cols])    )
-    }
-    new_col_order <- c(main_cats, all_cols[! all_cols %in% main_cats])
-    colData(sce) <- colData(sce)[,new_col_order]
-  }
-
-
-
-
-
-
-    app <- iSEE(sce,
-              colormap = ecm,
-              initial  = initial_plots
-  )
-
+  app <- make_iSEE_shinyApp_with_spatial_view(...)
 
   shiny::runApp(app)
 
 }
 
+#' @rdname launch_iSEE_with_spatial_view
+#' @export
+make_iSEE_shinyApp_with_spatial_view <- function(sce,
+                                            main_cats=c(),
+                                            plot_mode="spatial",
+                                            ecm=get_ecm(),
+                                            max_cat=40) {
+
+    initial_plots=get_initial_plots(plot_mode = plot_mode)
+
+    registerAppOptions(sce, color.maxlevels=max_cat)
 
 
+    # Put the 'main' columns at the front.
+    # First one will get used as defaults across plots.
+    # Others are at least easy to find in lists.
+    if (length(main_cats) > 0) {
+      all_cols <- colnames(colData(sce))
+      if (! all(main_cats %in% all_cols)) {
+        stop(paste("Can't find specified main categories in data columns: ",main_cats[!main_cats%in% all_cols])    )
+      }
+      new_col_order <- c(main_cats, all_cols[! all_cols %in% main_cats])
+      colData(sce) <- colData(sce)[,new_col_order]
+    }
+
+
+
+    app <- iSEE(sce,
+                colormap = ecm,
+                initial  = initial_plots
+    )
+    return(app)
+}
 
 

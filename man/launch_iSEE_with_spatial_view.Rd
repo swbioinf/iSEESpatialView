@@ -2,9 +2,12 @@
 % Please edit documentation in R/launch_iSEE.R
 \name{launch_iSEE_with_spatial_view}
 \alias{launch_iSEE_with_spatial_view}
+\alias{make_iSEE_shinyApp_with_spatial_view}
 \title{Convert Seurat to viewable SCE}
 \usage{
-launch_iSEE_with_spatial_view(
+launch_iSEE_with_spatial_view(...)
+
+make_iSEE_shinyApp_with_spatial_view(
   sce,
   main_cats = c(),
   plot_mode = "spatial",
@@ -41,6 +44,10 @@ for spatial browsing in iSEE. Mainly - two extra dimensional reductions.
 
 If not subsetted to fov / slide in iSEE, these will be overplotted. (No
 concept of different slides)
+
+\code{launch_iSEE_with_spatial_view()} launches the interface for use
+
+\code{make_iSEE_shinyApp_with_spatial_view()} will return a shinyApp object.
 }
 \examples{
 

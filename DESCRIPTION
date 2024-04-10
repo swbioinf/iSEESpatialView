@@ -1,6 +1,6 @@
 Package: iSEESpatialView
 Title: Use iSEE to View cosMX Spatial Data
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     person("Sarah", "Williams", , "sarah.williams@qcif.edu.au", role = c("aut", "cre"))
 Description: This package is a simple hack to get spatial rnaseq data displayed in iSEE. Specifically, its for Nanostring cosMX in Seurat ojects. Can show cells in their X-Y coordinates, with expression totals.  Image data isn't used, only cell centroids. Transcript level information also absent. This package is simply a temporary workaround until more dedicated spatial experiment browsers are available for this kind of data (e.g. VRomics, napari squidpy plugins, iSEE spatial plugins, AtoMX updates)
@@ -18,4 +18,5 @@ Imports:
     viridis,
     RColorBrewer,
     HDF5Array,
-    shiny
+    shiny,
+    grDevices

@@ -2,3 +2,4 @@
 
 export(convert_seurat_to_viewable_sce)
 export(launch_iSEE_with_spatial_view)
+export(make_iSEE_shinyApp_with_spatial_view)
